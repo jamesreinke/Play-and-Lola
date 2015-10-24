@@ -12,7 +12,8 @@ class Application extends Controller {
   }
 
   def home = Action {
-  	Ok(Encode(new Create(el("p", sText = "It works!"))))
+  	val style = Map("text-align" -> "center", "padding" -> "20px")
+  	Ok(Encode(new Create(el("h1", sText = "It works!", style = style))))
   }
 
 }
