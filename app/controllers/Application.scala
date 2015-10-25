@@ -13,14 +13,16 @@ class Application extends Controller {
   }
 
   def home = Action {
-  	val style = Map("text-align" -> "center", "padding" -> "20px")
+  	
+    val a = Article("James Wins the Election", 
+            "10-12-2020", 
+            "James Reinke", 
+            "It was an amazing election where James just barely won the vote at 79%..." * 20)
   	Ok(
   		Encode(
-	  		new Create(
-	  			Article("James Wins the Election", 
-	  			"10-12-2020", 
-	  			"James Reinke", 
-	  			"It was an amazing election where James just barely won the vote at 79%..."))))
+	  		List(
+          new Create(a),
+          new OnClick(a, new FadeOut(a, 2000)))))
   }
 
 }
