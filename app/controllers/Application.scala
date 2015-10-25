@@ -12,12 +12,11 @@ class Application extends Controller {
   }
 
   def home = Action {
-    val node = el("p", text = "whatever")
-    val input = el("input", attributes = Map("class" -> "input"))
+    val node = el("p", text = "", attributes = Map("class" -> "col-md-6"), style = Map("margin-bottom" -> "100px"))
+    val input = el("input", attributes = Map("class" -> "input col-md-6"), style = Map("width" -> "100%"))
 
     val cms = 
-      List(new Create(node), new OnClick(node, new Post("/change", List(node)))) ++
-      List(new Create(input), new OnKeyUp(input, new Post("/change", List(node))))
+      List(new Create(node), new Create(input), new OnKeyUp(input, new Post("/change", List(input, node))))
 
     Ok(Encode(cms))
   }
@@ -26,10 +25,12 @@ class Application extends Controller {
     implicit request => {
       request.body.asText match {
         case Some(text) => {
-          val p = Decode(text).head
-          p.style = Map("text-align" -> "center")
-          p.text = "Do not deny me!  " + p.text
-           Ok(Encode(new Update(p)))
+            Decode(text) match {
+              case List(a, b) => {
+                b.text = a.value
+                Ok(Encode(List(new Update(b))))
+              }
+            }
          }
         case None => BadRequest("Did not receive a node.")
       }
