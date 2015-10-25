@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 logs
 target
 /.idea
@@ -6,3 +7,22 @@ target
 /.project
 /.settings
 /RUNNING_PID
+=======
+*.class
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+>>>>>>> f86a1675b827b1858c5153e11e7995f0cd5a34c3
