@@ -26,6 +26,8 @@ object Article {
 */
 object DatabaseView {
 
+
+
 	def apply(header: List[String] = List(), table: List[List[String]]): Node = {
 		val labels = el("tr", items = header map { x => el("th", text = x) })
 		el(
@@ -34,4 +36,14 @@ object DatabaseView {
 			items = labels +: (table map { row => el("tr", items = row map { col => el("td", text = col) }) })
 		)
 	}
+
+	def filter(el: Node, s: String): List[Command] = {
+		val cMap = scala.collection.mutable.Map[String, Command]()
+		for(row <- el.items.tail) cMap += (row.id -> new Css(row, Map("display"->"none")))
+		val cms = for(row <- el.items.tail) {
+			for(col <- row.items) if(col.text contains s) cMap += (row.id -> new Css(row, Map("display"->"")))
+		}
+		cMap map { x => x._2 } toList
+	}
+
 }
