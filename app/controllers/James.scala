@@ -14,6 +14,7 @@ class James extends Controller {
 
 	def genTable = Action {
 
+		val input = el("input", style = Map("height" -> "50px", "width" -> "100%"))
 		val head = List("Name", "Phone Number", "# of Kidneys", "Age")
 		val body = List(
 			List("James Reinke", "(925)359-7786", "2", "24"),
@@ -22,7 +23,17 @@ class James extends Controller {
 
 		val t = table(head, body)
 
-		Ok(Encode(List(new Create(t))))
+		Ok(Encode(List(new Create(t),new Create(input)) ++ 
+			List(OnKeyUp(input, new Post("/modifyTable", List(t))))))
+	}
+
+	def modifyTable = Action {
+		implicit request => {
+			request.body.asText match {
+				case Some(text) => Ok("")
+				case None => BadRequest("No Text Response Found")
+			}
+		}
 	}
 
 }

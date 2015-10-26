@@ -11,6 +11,13 @@ object table {
 		el("table", attributes = Map("class"->"table"), items = List(h, b))
 	}
 	
+	def filter(s: String, table: Node): Node = {
+		for(row <- table.items.tail//skip headings) {
+			for(col <- row){
+				// add logic here to hide the individual rows in the table
+			}
+		}
+	}
 
 }
 
