@@ -24,13 +24,21 @@ class James extends Controller {
 		val t = table(head, body)
 
 		Ok(Encode(List(new Create(t),new Create(input)) ++ 
-			List(OnKeyUp(input, new Post("/modifyTable", List(t))))))
+			List(OnKeyUp(input, new Post("/modifyTable", List(input, t))))))
 	}
 
 	def modifyTable = Action {
 		implicit request => {
 			request.body.asText match {
-				case Some(text) => Ok("")
+				case Some(text) => {
+					Decode(text) match {
+						// We decoded two items
+						case List(input,t) =>  {
+							table.filter(input.value, t)
+							Ok(Encode(List(new Update(t)))) // Update the table
+						}
+					}
+				}
 				case None => BadRequest("No Text Response Found")
 			}
 		}
