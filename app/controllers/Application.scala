@@ -14,9 +14,16 @@ class Application extends Controller {
   def home = Action {
     val node = el("p", text = "", attributes = Map("class" -> "col-md-6"), style = Map("margin-bottom" -> "100px"))
     val input = el("input", attributes = Map("class" -> "input col-md-6"), style = Map("width" -> "100%"))
+    val button = el("button", text = "Table", attributes = Map("class" -> "btn btn-default"), style = Map("margin" -> "auto", "display" -> "block"))
 
     val cms = 
-      List(new Create(node), new Create(input), new OnKeyUp(input, new Post("/change", List(input, node))))
+      List(
+        new Clear(),
+        new Create(button),
+        new OnClick(button, new Get("/genTable")), 
+        new Create(node), 
+        new Create(input), 
+        new OnKeyUp(input, new Post("/change", List(input, node))))
 
     Ok(Encode(cms))
   }
