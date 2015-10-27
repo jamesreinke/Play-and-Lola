@@ -12,7 +12,9 @@ object Table {
 		val b = el("tobdy", items = body map { x => Row(x) })
 		el("table", attributes = Map("class"->"table"), items = List(h, b))
 	}
-	
+	/*
+		Hide rows of a table, whose columns do not contain the string s.
+	*/
 	def filter(s: String, table: Node): Unit = {
 		for(tbody <- table.items.tail) {
 			for(row <- tbody.items) {
@@ -30,5 +32,21 @@ object Table {
 		def apply(cols: List[String]): Node = el("tr", items = (for(col <- cols) yield el("td", text = col)).toList)
 
 	}
+
+}
+
+
+object Nav {
+	/*
+		Supply a list of strings along with their url's to navigate to.  Returns the navigation and initialization
+			commands.
+	*/
+	def apply(items: List[(String,String)]): (Node, List[Command]) = {
+		val tabs = (for((tag, url) <- items) yield el("li", text = tag, value = url))
+		val commands = (for(tab <- tabs) yield OnClick(tab, Get(tab.value))) // TODO: Add multiple commands as result of onclick event
+		(el("ul", attributes = Map("class" -> "nav nav-tabs"), items = tabs), commands)
+	}
+
+
 
 }
