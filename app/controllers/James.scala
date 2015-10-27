@@ -36,27 +36,27 @@ class James extends Controller {
 			List("Belle Tuttle", "Fuck Off", "2", "20"),
 			List("Bryan Reinke", "1-800-Causmic", "2", "26"))
 
-		val t = table(head, body)
+		val table = Table(head, body)
 
 		val container = el("div", 
 			attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
-			items = List(t, input))
+			items = List(table, input))
 
 		Send(
 			Clear(),
 			Create(button),
 			OnClick(button, Get("/home")),
 			Create(container),
-			OnKeyUp(input, Post("/modifyTable", List(input, t))))
+			OnKeyUp(input, Post("/modifyTable", input, table)))
 	}
 	/*
 		Decodes an input and table and filters the table rows given the input's value.
 	*/
 	def modifyTable = Action {
 		implicit request => {
-			val (input, iTable) = Extract[Node,Node](request)
-			table.filter(input.value, iTable)
-			Send(Update(iTable))
+			val (input, table) = Extract[Node,Node](request)
+			Table.filter(input.value, table)
+			Send(Update(table))
 		}
 	}
 

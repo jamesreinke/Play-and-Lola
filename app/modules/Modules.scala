@@ -2,11 +2,14 @@ package modules
 
 import lola.interface._
 
-object table {
+/*
+	A bootstrap function with auxiliary functions.
+*/
+object Table {
 
 	def apply(head: List[String], body: List[List[String]]): Node = {
 		val h = el("thead", items = head map { x => el("th", text = x) })
-		val b = el("tobdy", items = body map { x => row(x) })
+		val b = el("tobdy", items = body map { x => Row(x) })
 		el("table", attributes = Map("class"->"table"), items = List(h, b))
 	}
 	
@@ -19,15 +22,13 @@ object table {
 		}
 	}
 
-	def addRow(table: Node, items: List[String]): Unit = table.items = table.items :+ row(items)
+	def addRow(table: Node, items: List[String]): Unit = table.items = table.items :+ Row(items)
 
 
-	object row {
+	object Row {
 
 		def apply(cols: List[String]): Node = el("tr", items = (for(col <- cols) yield el("td", text = col)).toList)
 
 	}
-
-
 
 }

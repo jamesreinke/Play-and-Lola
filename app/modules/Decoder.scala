@@ -38,4 +38,15 @@ object Extract {
 			case _ => throw new Exception("No text found in body of message")
 		}
 	}
+	def apply[A,B,C,D](request: Request[AnyContent]): (A,B,C,D) = {
+		request.body.asText match {
+			case Some(text) => {
+				Decode(text) match {
+					case List(a,b,c,d) => (a.asInstanceOf[A], b.asInstanceOf[B], c.asInstanceOf[C], d.asInstanceOf[D])
+					case _ => throw new Exception("Cannot decode text as given type") 
+				}
+			}
+			case _ => throw new Exception("No text found in body of message")
+		}
+	}
 }

@@ -41,7 +41,7 @@ class Application extends Controller {
         Create(button), 
         Create(container), 
         OnClick(button, Get("/genTable")), 
-        OnKeyUp(input, Post("/change", List(input, node))))
+        OnKeyUp(input, Post("/change", input, node)))
 
   }
 
