@@ -42,9 +42,15 @@ object Nav {
 			commands.
 	*/
 	def apply(items: List[(String,String)]): (Node, List[Command]) = {
-		val tabs = (for((tag, url) <- items) yield el("li", text = tag, value = url))
-		val commands = (for(tab <- tabs) yield OnClick(tab, Get(tab.value))) // TODO: Add multiple commands as result of onclick event
-		(el("ul", attributes = Map("class" -> "nav nav-tabs"), items = tabs), commands)
+		val tabs = for((tag, url) <- items) yield {
+			el("button", text = tag, value = url, attributes = Map("class" -> "btn btn-default"))
+		}
+		val commands = for(tab <- tabs) yield {
+			OnClick(tab, Get(tab.value)) // TODO: Add multiple commands as result of onclick event
+		}
+		val contents = el("ul", attributes = Map("class" -> "nav navbar-nav"), items = tabs)
+		val nav = el("nav", attributes = Map("class" -> "navbar navbar-default"), items = List(contents))
+		(nav, commands)
 	}
 
 

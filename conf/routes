@@ -10,7 +10,7 @@ GET		/home						controllers.Application.home
 
 POST	/change 					controllers.Application.change
 
-GET 	/genTable					controllers.James.genTable
+GET 	/table						controllers.James.init
 
 POST 	/modifyTable 				controllers.James.modifyTable
 

@@ -16,8 +16,7 @@ class Application extends Controller {
   def home = Action {
 
     val node = el("p",
-     text = "", 
-     attributes = Map("class" -> "col-md-6"),
+     text = "",
      style = Map("margin-bottom" -> "100px"))
 
     val input = el(
@@ -25,23 +24,18 @@ class Application extends Controller {
       attributes = Map("class" -> "input col-md-6"), 
       style = Map("width" -> "100%"))
 
-    val button = el(
-      "button", 
-      text = "Table",
-      attributes = Map("class" -> "btn btn-primary"), 
-      style = Map("margin" -> "auto", "display" -> "block"))
+    val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table")))
 
     val container = el(
       "div", 
       attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
       items = List(node, input))
 
-      Send(
+      Send(List(
         Clear(), 
-        Create(button), 
+        Create(nav), 
         Create(container), 
-        OnClick(button, Get("/genTable")), 
-        OnKeyUp(input, Post("/change", input, node)))
+        OnKeyUp(input, Post("/change", input, node))) ++ commands)
 
   }
 

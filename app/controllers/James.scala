@@ -17,17 +17,13 @@ class James extends Controller {
 	/*
 		Generates a table with header.  See modules for table module.
 	*/
-	def genTable = Action {
+	def init = Action {
 
 		val input = el(
 			"input", 
 			style = Map("height" -> "50px", "width" -> "100%"))
 
-		val button = el(
-			"button", 
-			text = "Home", 
-			attributes = Map("class" -> "btn btn-primary"), 
-			style = Map("margin" -> "auto", "display" -> "block"))
+		val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table")))
 
 		val head = List("Name", "Phone Number", "# of Kidneys", "Age")
 
@@ -42,12 +38,11 @@ class James extends Controller {
 			attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
 			items = List(table, input))
 
-		Send(
+		Send(List(
 			Clear(),
-			Create(button),
-			OnClick(button, Get("/home")),
+			Create(nav),
 			Create(container),
-			OnKeyUp(input, Post("/modifyTable", input, table)))
+			OnKeyUp(input, Post("/modifyTable", input, table))) ++ commands)
 	}
 	/*
 		Decodes an input and table and filters the table rows given the input's value.

@@ -8,6 +8,9 @@ object Send extends Controller {
 	def apply(c: Command): play.api.mvc.Result = {
 		Ok(Encode(List(c)))
 	}
+	def apply(cms: List[Command]) = {
+		Ok(Encode(cms))
+	}
 	def apply(c: Command, c1: Command) = {
 		Ok(Encode(List(c, c1)))
 	}
