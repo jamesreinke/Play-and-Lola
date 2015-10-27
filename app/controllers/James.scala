@@ -54,18 +54,9 @@ class James extends Controller {
 	*/
 	def modifyTable = Action {
 		implicit request => {
-			request.body.asText match {
-				case Some(text) => {
-					Decode(text) match {
-						// We decoded two items
-						case List(input,t) =>  {
-							table.filter(input.value, t)
-							Send(Update(t)) // Update the table
-						}
-					}
-				}
-				case None => BadRequest("No Text Response Found")
-			}
+			val (input, iTable) = Extract[Node,Node](request)
+			table.filter(input.value, iTable)
+			Send(Update(iTable))
 		}
 	}
 

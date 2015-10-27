@@ -18,7 +18,7 @@ class Application extends Controller {
     val node = el("p",
      text = "", 
      attributes = Map("class" -> "col-md-6"),
-    style = Map("margin-bottom" -> "100px"))
+     style = Map("margin-bottom" -> "100px"))
 
     val input = el(
       "input", 
@@ -47,17 +47,9 @@ class Application extends Controller {
 
   def change = Action {
     implicit request => {
-      request.body.asText match {
-        case Some(text) => {
-            Decode(text) match {
-              case List(a, b) => {
-                b.text = a.value
-                Send(Update(b))
-              }
-            }
-         }
-        case None => BadRequest("Did not receive a node.")
-      }
+      val (input, node) = Extract[Node,Node](request)
+      node.text = input.value
+      Send(Update(node))
     }
   }
 }

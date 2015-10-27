@@ -26,4 +26,10 @@ object Send extends Controller {
 	def apply(c: Command, c1: Command, c2: Command, c3: Command, c4: Command, c5: Command, c6: Command) = {
 		Ok(Encode(List(c, c1, c2, c3, c4, c5, c6)))
 	}
+	def apply(c: Command, c1: Command, c2: Command, c3: Command, c4: Command, c5: Command, c6: Command, c7: Command) = {
+		Ok(Encode(List(c, c1, c2, c3, c4, c5, c6, c7)))
+	}
+	def apply(c: Command, c1: Command, c2: Command, c3: Command, c4: Command, c5: Command, c6: Command, c7: Command, c8: Command) = {
+		Ok(Encode(List(c, c1, c2, c3, c4, c5, c6, c7, c8)))
+	}
 }
