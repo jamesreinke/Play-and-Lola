@@ -19,9 +19,18 @@ class James extends Controller {
 	*/
 	def genTable = Action {
 
-		val input = el("input", style = Map("height" -> "50px", "width" -> "100%"))
-		val button = el("button", text = "Home", attributes = Map("class" -> "btn btn-default"), style = Map("margin" -> "auto", "display" -> "block"))
+		val input = el(
+			"input", 
+			style = Map("height" -> "50px", "width" -> "100%"))
+
+		val button = el(
+			"button", 
+			text = "Home", 
+			attributes = Map("class" -> "btn btn-primary"), 
+			style = Map("margin" -> "auto", "display" -> "block"))
+
 		val head = List("Name", "Phone Number", "# of Kidneys", "Age")
+
 		var body = List(
 			List("James Reinke", "(925) 359-7786", "2", "24"),
 			List("Belle Tuttle", "Fuck Off", "2", "20"),
@@ -29,8 +38,16 @@ class James extends Controller {
 
 		val t = table(head, body)
 
-		Ok(Encode(List(new Clear(), new Create(button), new OnClick(button, new Get("/home")), new Create(t),new Create(input)) ++ 
-			List(OnKeyUp(input, new Post("/modifyTable", List(input, t))))))
+		val container = el("div", 
+			attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
+			items = List(t, input))
+
+		Send(
+			Clear(),
+			Create(button),
+			OnClick(button, Get("/home")),
+			Create(container),
+			OnKeyUp(input, Post("/modifyTable", List(input, t))))
 	}
 	/*
 		Decodes an input and table and filters the table rows given the input's value.
@@ -43,7 +60,7 @@ class James extends Controller {
 						// We decoded two items
 						case List(input,t) =>  {
 							table.filter(input.value, t)
-							Ok(Encode(List(new Update(t)))) // Update the table
+							Send(Update(t)) // Update the table
 						}
 					}
 				}

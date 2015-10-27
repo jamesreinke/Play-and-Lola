@@ -2,7 +2,6 @@ package modules
 
 import lola.interface._
 
-
 object table {
 
 	def apply(head: List[String], body: List[List[String]]): Node = {
@@ -28,5 +27,7 @@ object table {
 		def apply(cols: List[String]): Node = el("tr", items = (for(col <- cols) yield el("td", text = col)).toList)
 
 	}
+
+
 
 }

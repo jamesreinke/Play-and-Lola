@@ -7,25 +7,42 @@ import lola.interface._
 
 class Application extends Controller {
 
+  import modules._
+
   def index = Action {
     Ok(views.html.index(""))
   }
 
   def home = Action {
-    val node = el("p", text = "", attributes = Map("class" -> "col-md-6"), style = Map("margin-bottom" -> "100px"))
-    val input = el("input", attributes = Map("class" -> "input col-md-6"), style = Map("width" -> "100%"))
-    val button = el("button", text = "Table", attributes = Map("class" -> "btn btn-default"), style = Map("margin" -> "auto", "display" -> "block"))
 
-    val cms = 
-      List(
-        new Clear(),
-        new Create(button),
-        new OnClick(button, new Get("/genTable")), 
-        new Create(node), 
-        new Create(input), 
-        new OnKeyUp(input, new Post("/change", List(input, node))))
+    val node = el("p",
+     text = "", 
+     attributes = Map("class" -> "col-md-6"),
+    style = Map("margin-bottom" -> "100px"))
 
-    Ok(Encode(cms))
+    val input = el(
+      "input", 
+      attributes = Map("class" -> "input col-md-6"), 
+      style = Map("width" -> "100%"))
+
+    val button = el(
+      "button", 
+      text = "Table",
+      attributes = Map("class" -> "btn btn-primary"), 
+      style = Map("margin" -> "auto", "display" -> "block"))
+
+    val container = el(
+      "div", 
+      attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
+      items = List(node, input))
+
+      Send(
+        Clear(), 
+        Create(button), 
+        Create(container), 
+        OnClick(button, Get("/genTable")), 
+        OnKeyUp(input, Post("/change", List(input, node))))
+
   }
 
   def change = Action {
@@ -35,7 +52,7 @@ class Application extends Controller {
             Decode(text) match {
               case List(a, b) => {
                 b.text = a.value
-                Ok(Encode(List(new Update(b))))
+                Send(Update(b))
               }
             }
          }
