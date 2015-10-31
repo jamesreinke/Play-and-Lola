@@ -9,7 +9,7 @@ import modules._
 	An example application showing how to generate a table and input object.  The input object sends an Ajax request
 		onKeyUp, where the server modifies the table given the value and then sends an update command.
 */
-class James extends Controller {
+class Table extends Controller {
 
 	def index = Action {
 		Ok("Hello!")
@@ -23,7 +23,7 @@ class James extends Controller {
 			"input", 
 			style = Map("height" -> "50px", "width" -> "100%"))
 
-		val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table")))
+		val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table"), ("Widget", "/widget")))
 
 		val head = List("Name", "Phone Number", "# of Kidneys", "Age")
 

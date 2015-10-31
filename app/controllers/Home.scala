@@ -5,7 +5,7 @@ import play.api.mvc._
 import upickle.default._
 import lola.interface._
 
-class Application extends Controller {
+class Home extends Controller {
 
   import modules._
 
@@ -24,7 +24,7 @@ class Application extends Controller {
       attributes = Map("class" -> "input col-md-6"), 
       style = Map("width" -> "100%"))
 
-    val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table")))
+    val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table"), ("Widget", "/widget")))
 
     val container = el(
       "div", 

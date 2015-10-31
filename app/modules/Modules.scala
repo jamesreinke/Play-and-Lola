@@ -53,6 +53,24 @@ object Nav {
 		(nav, commands)
 	}
 
+}
 
 
+object Widget {
+
+	def apply(nodes: List[Node], height: Int, width: Int, x: Int, y: Int): Node = {
+		el(
+			"div", 
+			items = nodes, 
+			style = Map(
+				"position" -> "fixed", 
+				"top" -> y.toString, 
+				"left" -> x.toString, 
+				"height" -> height.toString, 
+				"width" -> width.toString))
+	}
+
+	def apply(node: Node, height: Int, width: Int, x: Int, y: Int): Node = {
+		Widget(List(node), height, width, x, y)
+	}
 }
