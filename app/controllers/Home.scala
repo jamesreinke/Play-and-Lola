@@ -31,6 +31,7 @@ class Home extends Controller {
       attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
       items = List(node, input))
 
+    /* Send is an Ok response wrapper, automatically encoding any interface argument list. */
       Send(List(
         Clear(), 
         Create(nav), 
