@@ -23,7 +23,7 @@ class Table extends Controller {
 			"input", 
 			style = Map("height" -> "50px", "width" -> "100%"))
 
-		val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table")))
+		val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table"), ("Widget", "/widget")))
 
 		val head = List("Name", "Phone Number", "# of Kidneys", "Age")
 

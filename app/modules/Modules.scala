@@ -9,7 +9,7 @@ object Table {
 
 	def apply(head: List[String], body: List[List[String]]): Node = {
 		val h = el("thead", items = head map { x => el("th", text = x) })
-		val b = el("tobdy", items = body map { x => Row(x) })
+		val b = el("tbody", items = body map { x => Row(x) })
 		el("table", attributes = Map("class"->"table"), items = List(h, b))
 	}
 	/*
@@ -31,6 +31,24 @@ object Table {
 
 		def apply(cols: List[String]): Node = el("tr", items = (for(col <- cols) yield el("td", text = col)).toList)
 
+	}
+
+}
+/*
+	A grid of tiles consisting of other nodes.
+*/
+object Tiles {
+
+	def apply(nodes: List[Node]): Node = {
+		val tiles = nodes map { x => el("div", attributes = Map("class" -> s"col-md-6"), style = Map("padding" -> "10px")) }
+		el("div", attributes = Map("class" -> s"row"), items = tiles)
+	}
+}
+
+object Form {
+
+	def apply(): Node = {
+		el("div")
 	}
 
 }
@@ -98,6 +116,5 @@ object Nav {
 		(nav, commands)
 	}
 
-
-
 }
+

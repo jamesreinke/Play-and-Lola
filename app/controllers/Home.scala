@@ -24,13 +24,14 @@ class Home extends Controller {
       attributes = Map("class" -> "input col-md-6"), 
       style = Map("width" -> "100%"))
 
-    val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table")))
+    val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table"), ("Widget", "/widget")))
 
     val container = el(
       "div", 
       attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
       items = List(node, input))
 
+    /* Send is an Ok response wrapper, automatically encoding any interface argument list. */
       Send(List(
         Clear(), 
         Create(nav), 
