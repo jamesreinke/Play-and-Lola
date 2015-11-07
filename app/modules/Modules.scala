@@ -52,6 +52,7 @@ object Form {
 	}
 
 }
+<<<<<<< HEAD
 
 
 abstract class Nodable {
@@ -97,6 +98,8 @@ class Tableu(h: List[String], b: List[List[String]]) {
 
 
 }
+=======
+>>>>>>> d7c83459a5a58401e380d35ce9ccfad781280eb5
 
 
 object Nav {
