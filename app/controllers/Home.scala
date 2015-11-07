@@ -5,7 +5,7 @@ import play.api.mvc._
 import upickle.default._
 import lola.interface._
 
-class Application extends Controller {
+class Home extends Controller {
 
   import modules._
 
@@ -38,7 +38,9 @@ class Application extends Controller {
         OnKeyUp(input, Post("/change", input, node))) ++ commands)
 
   }
-
+  /*
+    Changes the top div element to emulate the contents of the lower div input...
+  */
   def change = Action {
     implicit request => {
       val (input, node) = Extract[Node,Node](request)
