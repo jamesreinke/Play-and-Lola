@@ -35,6 +35,18 @@ object Table {
 	}
 
 }
+/* 
+	An example of a class implementation with mutable functions.
+*/
+class Column(width: Int) {
+
+	val node = el("div", attributes = Map("class" -> s"col-md-${width}"))
+
+	def addItem(neu: Node): Unit = {
+		node.items = node.items :+ neu
+	}
+
+}
 
 /*
 	A grid of tiles consisting of other nodes.
@@ -66,4 +78,7 @@ object Nav {
 	}
 
 }
+
+
+
 
