@@ -39,7 +39,9 @@ class Home extends Controller {
         OnKeyUp(input, Post("/change", input, node))) ++ commands)
 
   }
-
+  /*
+    Changes the top div element to emulate the contents of the lower div input...
+  */
   def change = Action {
     implicit request => {
       val (input, node) = Extract[Node,Node](request)

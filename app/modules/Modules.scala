@@ -60,6 +60,54 @@ object Tiles {
 }
 
 
+abstract class Nodable {
+
+	val render: Node
+
+}
+
+
+object Tableu {
+
+	def apply(h: List[String], b: List[List[String]]): Node = {
+		(new Tableu(h, b)).render
+	}
+	// do we want this type of unapply method?  Method we should check the syntax of the parser
+	// 		To decide if this is truly a good design change.  What about Monads?  Do we understand those?
+	def apply(n: Node): Tableu = {
+		new Tableu(List(), List())
+	}
+
+}
+class Tableu(h: List[String], b: List[List[String]]) {
+
+	val head = el("thead", items = h map { x => el("th", text = x) })
+	val body = el("tbody", items = b map { x => (new Row(x)).render })
+
+	val render = el("table", attributes = Map("class"->"table"), items = List(head, body))
+
+	def filter(s: String, table: Tableu): Unit = {
+		for(row <- table.body.items){
+			row.style += ("display" -> "none")
+			for(col <- row.items) if(col.text contains s) row.style += ("display" -> "")
+		}
+	} 
+
+	def addRow(table: Node, items: List[String]): Unit = table.items = table.items :+ (new Row(items)).render
+
+	class Row(cols: List[String]) extends Nodable {
+
+		val render = el("tr", items = (for(col <- cols) yield el("td", text = col)).toList)
+
+	}
+
+
+}
+=======
+>>>>>>> d7c83459a5a58401e380d35ce9ccfad781280eb5
+
+>>>>>>> 08d7e26a4ec436bb959bb0cc738d702530ffb0c6
+
 object Nav {
 	/*
 		Supply a list of strings along with their url's to navigate to.  Returns the navigation and initialization
