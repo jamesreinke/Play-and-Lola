@@ -2,6 +2,7 @@ package modules
 
 import lola.interface._
 
+
 /*
 	A bootstrap function with auxiliary functions.
 */
@@ -34,6 +35,7 @@ object Table {
 	}
 
 }
+
 /*
 	A grid of tiles consisting of other nodes.
 */
@@ -43,14 +45,6 @@ object Tiles {
 		val tiles = nodes map { x => el("div", attributes = Map("class" -> s"col-md-6"), style = Map("padding" -> "10px")) }
 		el("div", attributes = Map("class" -> s"row"), items = tiles)
 	}
-}
-
-object Form {
-
-	def apply(): Node = {
-		el("div")
-	}
-
 }
 
 

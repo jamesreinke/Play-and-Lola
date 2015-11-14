@@ -21,7 +21,7 @@ class Table extends Controller {
 
 		val input = el(
 			"input", 
-			style = Map("height" -> "50px", "width" -> "100%"))
+			style = Map("height" -> "30px", "width" -> "100%"))
 
 		val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table"), ("Widget", "/widget")))
 
