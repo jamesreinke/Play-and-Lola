@@ -103,10 +103,6 @@ class Tableu(h: List[String], b: List[List[String]]) {
 
 
 }
-=======
->>>>>>> d7c83459a5a58401e380d35ce9ccfad781280eb5
-
->>>>>>> 08d7e26a4ec436bb959bb0cc738d702530ffb0c6
 
 object Nav {
 	/*

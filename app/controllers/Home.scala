@@ -5,6 +5,11 @@ import play.api.mvc._
 import upickle.default._
 import lola.interface._
 
+import slick.driver.H2Driver.api._
+import scala.concurrent._
+import scala.util.{Success, Failure}
+import ExecutionContext.Implicits.global
+
 class Home extends Controller {
 
   import modules._
@@ -13,40 +18,47 @@ class Home extends Controller {
     Ok(views.html.index(""))
   }
 
-  def home = Action {
-
-    val node = el("p",
-     text = "",
-     style = Map("margin-bottom" -> "100px"))
-
-    val input = el(
-      "input", 
-      attributes = Map("class" -> "input col-md-6"), 
-      style = Map("width" -> "100%"))
-
-    val (nav, commands): (Node, List[Command]) = Nav(List(("Home", "/home"), ("Table", "/table"), ("Widget", "/widget")))
-
-    val container = el(
-      "div", 
-      attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
-      items = List(node, input))
-
-    /* Send is an Ok response wrapper, automatically encoding any interface argument list. */
-      Send(List(
-        Clear(), 
-        Create(nav), 
-        Create(container), 
-        OnKeyUp(input, Post("/change", input, node))) ++ commands)
-
+  class Users(tag: Tag) extends slick.driver.H2Driver.api.Table[(Int, String, String)](tag, "Users"){
+    def id = column[Int]("id", O.PrimaryKey)
+    def email = column[String]("email")
+    def password = column[String]("password")
+    def * = (id, email, password)
   }
-  /*
-    Changes the top div element to emulate the contents of the lower div input...
-  */
+
+  def home = Action {
+      val email = el(
+        "input", 
+        attributes = Map(
+          "class" -> "row col-md-8 col-md-offset-2", 
+          "placeholder" -> "email"))
+      val password = el(
+        "input", 
+        attributes = Map("class" -> "row col-md-8 col-md-offset-2", "placeholder" -> "password"))
+      val submit = el(
+        "button",
+        text = "Submit",
+        attributes = Map("class" -> "row col-md-12 btn btn-default"))
+      val home = el(
+        "div",
+        attributes = Map("class" -> "col-md-6 col-md-offset-3"), 
+        items = List(email, password, submit))
+      Send(Create(home), OnClick(submit, Post("/change", email, password)))
+  }
+
   def change = Action {
     implicit request => {
-      val (input, node) = Extract[Node,Node](request)
-      node.text = input.value
-      Send(Update(node))
+      val (email, password) = Extract[Node,Node](request)
+      val db = Database.forConfig("h2mem1")
+      val table = TableQuery[Users]
+      try{
+        val insertActions = DBIO.seq(
+          table.schema.create,
+          table += (1, email.value, password.value)
+          )
+        db.run(insertActions).onSuccess{case _ => println("Fuck Yeah")}
+      } finally db.close()
+      Send(Clear())
     }
   }
+  
 }

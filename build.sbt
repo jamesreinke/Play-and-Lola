@@ -11,7 +11,10 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   specs2 % Test,
-  "com.lihaoyi" %% 		"upickle" 				% "0.3.6"
+  "com.lihaoyi" %% 		"upickle" 				% "0.3.6",
+  "com.typesafe.slick"%%"slick"%"3.1.0"
+  ,"org.slf4j"%"slf4j-nop"%"1.6.4"
+  ,"com.h2database"%"h2"%"1.3.148"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
