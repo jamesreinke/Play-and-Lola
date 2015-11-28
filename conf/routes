@@ -3,16 +3,11 @@
 # ~~~~
 
 # Javascript Loading Page
-GET     /                           controllers.Home.index
+GET     /                           controllers.Index.index
 
 # Home Page
-GET		/home						controllers.Home.home
+GET		/login						controllers.Login.index
 
-POST	/change 					controllers.Home.change
-
-GET 	/table						controllers.Table.init
-
-POST 	/modifyTable 				controllers.Table.modifyTable
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
